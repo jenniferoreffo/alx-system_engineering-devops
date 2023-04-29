@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # display best school ten times
 
-for ((a = 1; a <= 10; a++)
+for ((a = 1; a <= 10; a++))
 do
     echo "Best School"
 done

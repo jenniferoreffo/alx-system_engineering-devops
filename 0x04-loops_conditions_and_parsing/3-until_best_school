@@ -4,10 +4,10 @@
 
 a=1
 
-while [ $a -gt 10 ]
+until [ $a -gt 10 ]
 
 do
 
     echo "Best School"
-    ((a++)
+    ((a++))
 done
