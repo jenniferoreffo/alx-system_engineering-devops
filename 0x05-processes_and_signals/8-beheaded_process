@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#stops sxript 7
+
+kill -9 "$(pgrep -f highlander)"
