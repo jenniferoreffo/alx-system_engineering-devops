@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This script displays listening ports with the PID and the name of program to which each socket belongs. 
+nestat -lp
