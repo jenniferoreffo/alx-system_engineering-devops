@@ -1,0 +1,8 @@
+# To configure ssh Client so that you can connect to a server without typing a password 
+Host *
+    SendEnv LABG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials no
+    IdentifyFile ~/.ssh/shool
+    PasswordAuthentication no
