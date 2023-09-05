@@ -11,11 +11,11 @@ exec { 'installing web_server':}
 } 
 
 exec { 'configure server':
-  command  => 'sudo sed -i  "0,/location \/ {/s//location \/ {\n\t\tadd_header X-Served-By \'03-$(hostname | cut -c 8-)\ ';',
+  command  => 'sudo sed -i 0,/location \/ {/s//location \/ {\n\t\tadd_header X-Served-By \'03-$(hostname | cut -c 8-)'\ ';',
   provider => shell,
 }
 
-exec  { 'restart server':
+exec { 'restart server':
   command  => 'sudo service nginx restart',
   provider => shell,
 }
