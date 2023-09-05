@@ -1,21 +1,10 @@
-#!/usr/bin env bash
-#configure Nginx
+#!/usr/bin/env bash
+# Configure Nginx so that its HTTP response contains a custom header.
 
 sudo apt-get update
 sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
 
-sudo chown -R "$USER":"$USER" /var/www
-
-echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
-
-echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
-
-
-sudo sed -i "48i\\\tif (\$request_filename ~ redirect_me){\n\t\t\
-rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n\t}" /etc/nginx/sites-available/default
-
-
-string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
-sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
-
+new_string="location \/ {\n\t\tadd_header X-Served-By \'03-$(hostname | cut -c 8-)\';"
+sudo sed -i "0,/location \/ {/s//$new_string/" /etc/nginx/sites-available/default
 sudo service nginx restart
