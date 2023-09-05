@@ -1,5 +1,5 @@
 #!/usr/bin env bash
-# Install the configure HAprosy on you Ib-01server
+#Install and configure HAproxy on your lb-01 server
 
 sudo apt-get update
 sudo apt-get install --no-install-recommends software-properties-common
@@ -8,9 +8,9 @@ apt-get install -y haproxy=2.8.\*
  
 frontend='\nfrontend myfrontend\n\tmode http\n\tbind *:80'
 backend='\n\tdefault_backend web_servers\n\nbackend web_servers\n\tbalance roundrobin'
-backend1='\n\tmode http\n\tserver 215122-web-01 3.89.160.89:80 check'
-backend2='\n\tserver 215122-web-02 54.85.89.24:80 check'
-f_string='$frontend$backend$backend1$backend2"\n"
-printf"%s""$f_string" | sudo tee-a /etc/haproxy/haproxy.cfg
+backend1='\n\tmode http\n\tserver 03-web-01 3.89.160.89:80 check'
+backend2='\n\tserver 03-web-02 54.85.89.24:80 check'
+f_string="$frontend$backend$backend1$backend2\n"
+printf "%s" "$f_string" | sudo tee-a /etc/haproxy/haproxy.cfg
 sudo service haproxy restart
 
