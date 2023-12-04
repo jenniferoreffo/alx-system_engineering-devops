@@ -1,11 +1,11 @@
-# configure nginx webserver
+#configure nginx webserver
 
 exec { 'update system':
   command  => 'sudo apt-get update',
   provider => shell,
- }
+}
 
-exec { 'installing web_server':}
+exec { 'installing web_server':
   command  => 'sudo apt-get -y install nginx; sudo ufw allow "Nginx HTTP"',
   provider => shell,
 } 
