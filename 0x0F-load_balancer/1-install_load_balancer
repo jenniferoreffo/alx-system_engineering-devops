@@ -1,5 +1,4 @@
-#!/usr/bin env bash
-
+#!/usr/bin/env bash
 #A Bash script that configures a new Ubuntu machine '1-install_load_balancer'
 
 sudo apt-get update
