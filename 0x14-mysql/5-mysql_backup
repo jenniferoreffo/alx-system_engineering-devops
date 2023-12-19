@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <mysql_password>"
+    exit 1
+fi
+
+# MySQL credentials
+MYSQL_USER="root"
+MYSQL_PASSWORD="$1"
+
+#Backup directory
+BACKUP_DIR="/path/to/backup"
+
+# Create backup directory if it doesn't exist
+mkdir -p "$BACKUP_DIR"
+
+# Generate MySQL dump
+mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_DIR/backup.sql"
+
+# Get the current date in the desired format
+DATE_FORMAT=$(date +"%d-%m-%Y")
+
+#Compress the MySQL dump to a tar.gz archive
+tar -czvf "$BACKUP_DIR/$DATE_FORMAT.tar.gz" -C "$BACKUP_DIR" backup.sql
+
+#Remove the uncompressed MySQL dump
+rm "$BACKUP_DIR/backup.sql"
+
+echo "Backup completed successfully. Archive: $BACKUP_DIR/$DATE_FORMAT.tar.gz

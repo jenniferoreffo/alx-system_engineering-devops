@@ -1,0 +1,30 @@
+Open the MySQL configuration file on web-02:
+
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+specify the server-id, log bin settings, and replication setting
+
+server-id = 2
+log_bin = /var/log/mysql/mysql-bin.log
+relay_log = /var/log/mysql/mysql-relay-bin.log
+log_slave_updates = 1
+read_only = 1
+
+
+sudo service mysql restart
+
+Log in to MySQL on web-01 and create a test database and table, then insert a record.
+
+Check if the record is replicated on web-02
+
+mysql -u your_username -p -h web-02
+SHOW DATABASES;    -- Check if the database is present
+USE your_database;
+SELECT * FROM your_table;
+
+sudo ufw allow 3306
+
+
+sudo ufw enable
+

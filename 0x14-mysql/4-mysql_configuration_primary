@@ -1,0 +1,12 @@
+#Open the MySQL configuration file
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+# bind-address = 127.0.0.1
+
+#specify the server-id and log bin settings:
+server-id = 1
+log_bin = /var/log/mysql/mysql-bin.log
+
+sudo service mysql restart
+
