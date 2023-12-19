@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#Fix this container so that Nginx is running as the nginx user.
+pkill apache2
+#pkill terminates all apache2 running, then chown change ownership to nginx
+chown nginx /etc/nginx/nginx.conf
+#chmod u+r file permission to read only to file owner to prevent malicious attacks
+chmod u+r /etc/nginx/nginx.conf
+#sed -i to edit the file to replace all 80 with 8080 and save at the default file
+sed -i "s/80/8080/g" /etc/nginx/sites-available/default
+# restart nginx to save changes
+sudo -u nginx service nginx restart
