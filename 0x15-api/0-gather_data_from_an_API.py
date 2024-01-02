@@ -2,24 +2,22 @@
 # -*- coding: utf-8 -*-
 """ Python script that, using a REST API
 """
-from requests import get
+import requests 
 from sys import argv
+if __name__ == "__main__":
+     """the script runs if not imported"""
+     url = 'https://jsonplaceholder.typicode.com/'
+     req = requests.get(url + "users/" + argv[1]).json()
+     todo = requests.get(url + "todos", params={"userId": argv[1]}).json()
+     completedTaskTitle = []
+     completed = 0
 
-if __name__ == '__main__':
-    user_id = argv[1]
-    url = 'https://jsonplaceholder.typicode.com/users/{}'.format(user_id)
-    name = response.json().get('name')
-    url = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(user_id)
-    response = get(url)
-    tasks = response.json()
-    done = 0
-    done_tasks = []
+     for i in todo:
+         if i['completed'] is True:
+             completed += 1
+             completedTaskTitle.append(i['title'])
+     print("Employee {} is done with tasks({}/{}):".format(req['name'], completed, len(todo)))
 
-    for task in tasks:
-        if task.get('completed'):
-            done_tasks.append(task)
-            done = done + 1
-    print("Employee {} is done with tasks({}/{}):"
-            .format(name, done, len(tasks)))
-    for task in done_tasks:
-        print("\t {}".format(task.get('title')))
+     for title in completedTaskTitle:
+         print("\t {}".format(title))
+
