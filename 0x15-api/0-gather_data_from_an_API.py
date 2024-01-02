@@ -2,30 +2,24 @@
 # -*- coding: utf-8 -*-
 """ Python script that, using a REST API
 """
+from requests import get
+from sys import argv
 
-import requests
-import sys
+if __name__ == '__main__':
+    user_id = argv[1]
+    url = 'https://jsonplaceholder.typicode.com/users/{}'.format(user_id)
+    name = response.json().get('name')
+    url = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(user_id)
+    response = get(url)
+    tasks = response.json()
+    done = 0
+    done_tasks = []
 
-def get_employee_todo_progress(employee_id):
-    url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
-    response = requests.get(url)
-    todos = response.json()
-
-    if response.status_code != 200:
-        print("Failed to fetch data")
-        return
-    completed_tasks = [task for task in todos if task['completed']]
-    total_tasks = len(todos)
-
-    employee_name = todos[0]['username'] if total_tasks > 0 else "Unknown"
-    print(f"Employee {employee_name} is done with tasks ({len(completed_tasks)}/{total_tasks}):")
-    print(f"{employee_name}: {len(completed_tasks)}/{total_tasks}")
-    for task in completed_tasks:
-        print(f"\t{task['title']}")
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script_name.py employee_id")
-    else:
-        employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
+    for task in tasks:
+        if task.get('completed'):
+            done_tasks.append(task)
+            done = done + 1
+    print("Employee {} is done with tasks({}/{}):"
+            .format(name, done, len(tasks)))
+    for task in done_tasks:
+        print("\t {}".format(task.get('title')))
